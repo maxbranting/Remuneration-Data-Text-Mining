@@ -109,6 +109,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+textmining/
 
 # Spyder project settings
 .spyderproject
