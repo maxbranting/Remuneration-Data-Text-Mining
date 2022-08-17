@@ -16,6 +16,7 @@ def get_pages(pdf_list):
     """
     pdf_pages = []
     for element in pdf_list:
+        print(f'Reading in document {element}')
         document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
         # here we retrieve number of pages to enable us to iterate through them below
         no_pages = document.getNumPages()
@@ -31,3 +32,36 @@ def get_pages(pdf_list):
                 pagenum_list.append(i)
         # appending dictionary of lists
         pdf_pages[element] = pagenum_list
+        print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
+
+
+
+def pdf_tables_to_df():
+    """
+    Downloads tables from pdf to a dataframe
+
+    """
+
+    for title, pages in pdf_pages.items():
+        #list for documents that had no tables
+        notabpdfs = []
+        #empty list of dataframes
+        tempdfs = []
+        for page in pages:
+            #converting page to str for camelot read
+            cpage = str(page)
+            #reading in the tables in given pages
+            tables = camelot.read_pdf(pth + '/' + title, pages=cpage)
+            if len(tables)==0:
+                notabpdfs.append(title)
+            else:    
+                for i in range(len(tables)):
+                    tempdf = tables[i].df
+                    #deleting last 4 chars in title which is the ".pdf" part
+                    tempdf['Institution_year'] = title[:-4]
+                    # appending temporary dfs to a list
+                    tempdfs.append(tempdf)
+                    #concatanating all temporary dfs from the page
+                    dfconc = pd.concat(tempdfs)
+                    # concatanating newest version of  dftext by tables from the page
+                    dftext = pd.concat([dftext, dfconc], axis = 0, ignore_index = True)
