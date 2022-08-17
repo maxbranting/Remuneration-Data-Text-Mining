@@ -1,0 +1,8 @@
+pth = 1
+
+key_words = {'exec': ['ceo', 'chief executive', 'chief executive officer', 'director'], 
+    'pay': ['commission', 'remuneration', 'salary', 'compensation', 'benefits', 'variable remuneration', 
+    'fixed remuneration', 'clawback', 'emoluments', 'exceptional remuneration', 'fixed fees', 'attendance fees']}
+
+keywords_pay = ['remuneration', 'salary', 'compensation', 'fixed remuneration', 'emoluments', 'fixed fees', 'attendance fees', 'benefits', 'variable remuneration', 'exceptional remuneration', 'clawback', 'commission', 'variable fees', 
+    'variable remuneration', 'variable compensation', 'variable fees']
