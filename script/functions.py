@@ -26,6 +26,7 @@ def get_pdf_tables(pdf_list) -> pd.DataFrame:
     pdf_pages = get_pages(pdf_list)
 
     for title, pages in pdf_pages.items():
+        print(f'Searching for tables in {title}')
         #list for documents that had no tables
         notabpdfs = []
         #empty list of dataframes
@@ -68,6 +69,7 @@ def get_pdf_text(pdf_list) -> dict:
     remuntext_dict = {}
     extracted_text = pd.DataFrame()
     for title, pages in pdf_pages.items():
+        print(f'Searching for text in {title}')
         document = PyPDF2.PdfFileReader(pth + '/' + title, strict=False)
         for page in pages:
             textsplit = document.getPage(page).extractText().lower().split()
@@ -75,7 +77,7 @@ def get_pdf_text(pdf_list) -> dict:
                 if item in keywords_pay:
                     dictitle = (str(title) + ' page ' + str(page))
                     remuntext_dict[dictitle] = textsplit[index-50:index+50]
-
+                    print('Keywords found /n Extracting text')
 
 
 def get_pages(pdf_list) -> dict:
@@ -87,7 +89,7 @@ def get_pages(pdf_list) -> dict:
     Insert a list pdf file names.
     
     """
-    pdf_pages = []
+    pdf_pages = {}
     for element in pdf_list:
         print(f'Reading in document {element}')
         document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
@@ -106,3 +108,4 @@ def get_pages(pdf_list) -> dict:
         # appending dictionary of lists
         pdf_pages[element] = pagenum_list
         print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
+    print(f'Found keywords in documents {pdf_pages.keys()}')
