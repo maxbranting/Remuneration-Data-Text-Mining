@@ -6,24 +6,69 @@ import pikepdf
 import camelot
 from script.variables import pth, key_words, keywords_pay
 
-word_set_1 = set(key_words['exec'])
-word_set_2 = set(key_words['pay'])
+
+#decrypting pdf's
+def decrypt_load(pdf_list:list, pth):
+    """
+    Decrypts pdf files in given directory and overwrites them.
+
+    Arguments
+    ------
+    pdf_list: list of pdf file names
+    pth: path in which pdf's are stored
+    """
+    for n in pdf_list:
+        pdf = pikepdf.open(pth + '/' + n, allow_overwriting_input=True)
+        pdf.save(pth + '/' + n) 
 
 
-def get_pdf_tables(pdf_list) -> pd.DataFrame:
+def get_pages(pdf_list:list) -> dict:
+    """
+    Returns a dictionary containing pdf file name and numbers of pages where keywords have been found.
+    
+    Arguments
+    -------
+    Insert a list pdf file names.
+    
+    """
+    word_set_1 = set(key_words['exec'])
+    word_set_2 = set(key_words['pay'])
+    pdf_pages = {}
+    for element in pdf_list:
+        print(f'Reading in document {element}')
+        document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
+        # here we retrieve number of pages to enable us to iterate through them below
+        no_pages = document.getNumPages()
+        # defining list for page numbers
+        pagenum_list=[]
+        for i in range(no_pages):
+            # extracting text from a page and florring the letters
+            text = document.getPage(i).extractText().lower()
+            # set and split allows us to later iterate throug words
+            text_set = set(text.split())
+            if word_set_1.intersection(text_set) and word_set_2.intersection(text_set):
+                # appending list with page numbers
+                pagenum_list.append(i)
+        # appending dictionary of lists
+        pdf_pages[element] = pagenum_list
+        print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
+    print(f'Found keywords in documents {pdf_pages.keys()}')
+
+
+
+def get_pdf_tables(pdf_pages:dict) -> pd.DataFrame:
     """
     Downloads tables from pdf to a dataframe.
     
     Arguments
     -------
-    Insert a list pdf file names.
+    Insert a dictionary where keys are names of files and values are numbers of pages.
     
     How to use
     -------
     Assign the function to a variable. The function will return concatanated tables as a dataframe
     """
 
-    pdf_pages = get_pages(pdf_list)
 
     for title, pages in pdf_pages.items():
         print(f'Searching for tables in {title}')
@@ -51,9 +96,10 @@ def get_pdf_tables(pdf_list) -> pd.DataFrame:
                     dftext = pd.concat([dftext, dfconc], axis = 0, ignore_index = True)
 
 
-def get_pdf_text(pdf_list) -> dict:
+def get_pdf_text(pdf_pages:dict) -> dict:
     """
     Searches for keywords on pages that cointain them. If found extracts 50 words before and 50 words after the keyword.
+    
     Arguments
     -------
     Insert a list pdf file names.
@@ -62,8 +108,6 @@ def get_pdf_text(pdf_list) -> dict:
     -----
     Assign to a variable, the function will return a dictionary of filename and its page as key and a list of words as value.
     """
-
-    pdf_pages = get_pages(pdf_list)
 
     insert = ' page '
     remuntext_dict = {}
@@ -78,34 +122,3 @@ def get_pdf_text(pdf_list) -> dict:
                     dictitle = (str(title) + ' page ' + str(page))
                     remuntext_dict[dictitle] = textsplit[index-50:index+50]
                     print('Keywords found /n Extracting text')
-
-
-def get_pages(pdf_list) -> dict:
-    """
-    Returns a dictionary containing pdf file name and numbers of pages where keywords have been found.
-    
-    Arguments
-    -------
-    Insert a list pdf file names.
-    
-    """
-    pdf_pages = {}
-    for element in pdf_list:
-        print(f'Reading in document {element}')
-        document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
-        # here we retrieve number of pages to enable us to iterate through them below
-        no_pages = document.getNumPages()
-        # defining list for page numbers
-        pagenum_list=[]
-        for i in range(no_pages):
-            # extracting text from a page and florring the letters
-            text = document.getPage(i).extractText().lower()
-            # set and split allows us to later iterate throug words
-            text_set = set(text.split())
-            if word_set_1.intersection(text_set) and word_set_2.intersection(text_set):
-                # appending list with page numbers
-                pagenum_list.append(i)
-        # appending dictionary of lists
-        pdf_pages[element] = pagenum_list
-        print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
-    print(f'Found keywords in documents {pdf_pages.keys()}')
