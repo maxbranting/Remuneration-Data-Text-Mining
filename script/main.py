@@ -1,14 +1,10 @@
 print('Hello Friend')
 
 import sys, os
-import PyPDF2
 import re
 import pandas as pd
-import pikepdf
-import camelot
-from script.functions import pdf_tables_to_df
+from script.functions import get_pdf_tables, get_pdf_text
 from script.variables import pth, key_words, keywords_pay
-from functions import get_pages, pdf_tables_to_df
 
 #pdf_dir = os.listdir(pth)
 pdf_list = []
@@ -16,7 +12,8 @@ pdf_list = []
 #    pdf_list.append(file)
 
 
-get_pages(pdf_list)
+extracted_text = get_pdf_text(pdf_list)
 
 
-pdf_tables_to_df()
+extracted_tables = get_pdf_tables()
+extracted_tables.to_csv(r"", sep=',', encoding='latin1')
