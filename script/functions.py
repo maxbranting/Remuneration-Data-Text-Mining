@@ -113,9 +113,7 @@ def get_pdf_text(pdf_pages:dict, pth) -> dict:
     Assign to a variable, the function will return a dictionary of filename and its page as key and a list of words as value.
     """
 
-    insert = ' page '
     remuntext_dict = {}
-    extracted_text = pd.DataFrame()
     for title, pages in pdf_pages.items():
         print(f'Searching for text in {title}')
         document = PyPDF2.PdfFileReader(pth + '/' + title, strict=False)
