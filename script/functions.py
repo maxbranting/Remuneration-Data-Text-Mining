@@ -96,6 +96,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
                     dfconc = pd.concat(tempdfs)
                     # concatanating newest version of  dftext by tables from the page
                     dftext = pd.concat([dftext, dfconc], axis = 0, ignore_index = True)
+    return dftext
 
 
 def get_pdf_text(pdf_pages:dict) -> dict:
@@ -125,3 +126,6 @@ def get_pdf_text(pdf_pages:dict) -> dict:
                     dictitle = (str(title) + ' page ' + str(page))
                     remuntext_dict[dictitle] = textsplit[index-50:index+50]
                     print('Keywords found /n Extracting text')
+    remuntext_dict = {index: ' '.join(values) for index, values in remuntext_dict.items()}
+    remuntext_df = pd.DataFrame.from_dict(remuntext_dict, orient = 'index')
+    return remuntext_df
