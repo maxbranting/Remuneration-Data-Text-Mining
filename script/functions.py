@@ -99,7 +99,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
     return dftext
 
 
-def get_pdf_text(pdf_pages:dict) -> dict:
+def get_pdf_text(pdf_pages:dict, pth) -> dict:
     """
     Searches for keywords on pages that cointain them. If found extracts 50 words before and 50 words after the keyword.
     

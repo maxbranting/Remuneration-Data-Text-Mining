@@ -28,14 +28,14 @@ decrypt_load(pdf_list, pth)
 #################################### EXTRACTION ####################################
 
 # Identyfying pages which contain keywords
-pdf_pages = get_pages(pdf_list)
+pdf_pages = get_pages(pdf_list, pth)
 
 # Extraction of tables from previously listed out pages
-extracted_tables = get_pdf_tables(pdf_pages)
+extracted_tables = get_pdf_tables(pdf_pages, pth)
 extracted_tables.to_csv(write_path, sep=',', encoding='latin1')
 
 # Extraction of text from previously listed pages
-extracted_text = get_pdf_text(pdf_pages)
-#extracted_text.to_csv(write_path, sep=',', encoding='latin1')
+extracted_text = get_pdf_text(pdf_pages, pth)
+extracted_text.to_csv(write_path, sep=',', encoding='latin1')
 
 print('Goodbye Friend')
