@@ -14,22 +14,23 @@ def decrypt_load(pdf_list:list, pth):
 
     Arguments
     ------
-    pdf_list: list of pdf file names
-    pth: path in which pdf's are stored
+    pdf_list: list of pdf file names.
+    pth: path in which pdf's are stored.
     """
     for n in pdf_list:
         pdf = pikepdf.open(pth + '/' + n, allow_overwriting_input=True)
         pdf.save(pth + '/' + n) 
 
 
-def get_pages(pdf_list:list) -> dict:
+def get_pages(pdf_list:list, pth) -> dict:
     """
     Returns a dictionary containing pdf file name and numbers of pages where keywords have been found.
     
     Arguments
     -------
-    Insert a list pdf file names.
-    
+    pdf_list: list of pdf file names.
+    pth: path where pdf files are stored.
+
     """
     word_set_1 = set(key_words['exec'])
     word_set_2 = set(key_words['pay'])
@@ -56,14 +57,15 @@ def get_pages(pdf_list:list) -> dict:
 
 
 
-def get_pdf_tables(pdf_pages:dict) -> pd.DataFrame:
+def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
     """
     Downloads tables from pdf to a dataframe.
     
     Arguments
     -------
-    Insert a dictionary where keys are names of files and values are numbers of pages.
-    
+    pdf_pages: dictionary where keys are names of files and values are numbers of pages.
+    pth: path where pdf files are stored.
+
     How to use
     -------
     Assign the function to a variable. The function will return concatanated tables as a dataframe
@@ -102,7 +104,8 @@ def get_pdf_text(pdf_pages:dict) -> dict:
     
     Arguments
     -------
-    Insert a list pdf file names.
+    pdf_pages: dictionary where keys are names of files and values are numbers of pages.
+    pth: path where pdf files are stored.
 
     How to use
     -----
