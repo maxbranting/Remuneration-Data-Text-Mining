@@ -6,7 +6,7 @@ import re
 import pandas as pd
 import pikepdf
 import camelot
-from .functions import pdf_tables_to_df
+from script.functions import pdf_tables_to_df
 from script.variables import pth, key_words, keywords_pay
 from functions import get_pages, pdf_tables_to_df
 
@@ -17,7 +17,6 @@ pdf_list = []
 
 
 get_pages(pdf_list)
-
 
 
 pdf_tables_to_df()
