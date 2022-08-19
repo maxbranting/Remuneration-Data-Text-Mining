@@ -8,5 +8,3 @@ key_words = {'exec': ['ceo', 'chief executive', 'chief executive officer', 'dire
 
 keywords_pay = ['remuneration', 'salary', 'compensation', 'fixed remuneration', 'emoluments', 'fixed fees', 'attendance fees', 'benefits', 'variable remuneration', 'exceptional remuneration', 'clawback', 'commission', 'variable fees', 
     'variable remuneration', 'variable compensation', 'variable fees']
-
-write_path = ''

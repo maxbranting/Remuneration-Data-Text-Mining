@@ -1,13 +1,10 @@
-import sys, os
-import PyPDF2
-import re
 import pandas as pd
 import pikepdf
+import PyPDF2
 import camelot
-from script.variables import pth, key_words, keywords_pay
+from script.variables import key_words, keywords_pay
 
 
-#decrypting pdf's
 def decrypt_load(pdf_list:list, pth):
     """
     Decrypts pdf files in given directory and overwrites them.
