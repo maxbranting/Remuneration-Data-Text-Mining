@@ -83,6 +83,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
         notabpdfs = []
         #empty list of dataframes
         tempdfs = []
+        dftext = pd.DataFrame()
         for page in pages:
             #converting page to str for camelot read
             cpage = str(page)
@@ -101,6 +102,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
                     dfconc = pd.concat(tempdfs)
                     # concatanating newest version of  dftext by tables from the page
                     dftext = pd.concat([dftext, dfconc], axis = 0, ignore_index = True)
+    
     return dftext
 
 
