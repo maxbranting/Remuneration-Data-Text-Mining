@@ -34,13 +34,14 @@ def get_pages(pdf_list:list, pth) -> dict:
     pdf_pages = {}
     evaded_pdfs = []
     for element in pdf_list:
-        print(f'Reading in document {element}')
-        document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
-        # here we retrieve number of pages to enable us to iterate through them below
-        no_pages = document.getNumPages()
-        # defining list for page numbers
-        pagenum_list=[]
         try:
+            print(f'Reading in document {element}')
+            document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
+            # here we retrieve number of pages to enable us to iterate through them below
+            no_pages = document.getNumPages()
+            # defining list for page numbers
+            pagenum_list=[]
+        
             for i in range(no_pages):
                 # extracting text from a page and florring the letters
                 text = document.getPage(i).extractText().lower()
@@ -53,8 +54,8 @@ def get_pages(pdf_list:list, pth) -> dict:
             pdf_pages[element] = pagenum_list
             print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
         except UnicodeDecodeError:
-            evaded_pdfs.append(element)
-            print(f'Could not get pages for {element}')
+            #evaded_pdfs.append(element)
+            #print(f'Could not get pages for {element}')
             pass
 
     print(f'Found keywords in documents {pdf_pages.keys()} /n Could not scan through {evaded_pdfs}')
