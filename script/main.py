@@ -21,7 +21,7 @@ for file in pdf_dir:
     pdf_list.append(file)
 
 # Decrypting pdfs and overwriting them
-decrypt_load(pdf_list, pth)
+#decrypt_load(pdf_list, pth)
 
 
 #################################### EXTRACTION ####################################

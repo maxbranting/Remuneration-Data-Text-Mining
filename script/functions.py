@@ -32,6 +32,7 @@ def get_pages(pdf_list:list, pth) -> dict:
     word_set_1 = set(key_words['exec'])
     word_set_2 = set(key_words['pay'])
     pdf_pages = {}
+    evaded_pdfs = []
     for element in pdf_list:
         print(f'Reading in document {element}')
         document = PyPDF2.PdfFileReader(pth + '/' + element, strict=False)
@@ -39,18 +40,24 @@ def get_pages(pdf_list:list, pth) -> dict:
         no_pages = document.getNumPages()
         # defining list for page numbers
         pagenum_list=[]
-        for i in range(no_pages):
-            # extracting text from a page and florring the letters
-            text = document.getPage(i).extractText().lower()
-            # set and split allows us to later iterate throug words
-            text_set = set(text.split())
-            if word_set_1.intersection(text_set) and word_set_2.intersection(text_set):
-                # appending list with page numbers
-                pagenum_list.append(i)
-        # appending dictionary of lists
-        pdf_pages[element] = pagenum_list
-        print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
-    print(f'Found keywords in documents {pdf_pages.keys()}')
+        try:
+            for i in range(no_pages):
+                # extracting text from a page and florring the letters
+                text = document.getPage(i).extractText().lower()
+                # set and split allows us to later iterate throug words
+                text_set = set(text.split())
+                if word_set_1.intersection(text_set) and word_set_2.intersection(text_set):
+                    # appending list with page numbers
+                    pagenum_list.append(i)
+            # appending dictionary of lists
+            pdf_pages[element] = pagenum_list
+            print(f'Found {len(pagenum_list)} pages containging keywords in {element}')
+        except UnicodeDecodeError:
+            evaded_pdfs.append(element)
+            print(f'Could not get pages for {element}')
+            pass
+
+    print(f'Found keywords in documents {pdf_pages.keys()} /n Could not scan through {evaded_pdfs}')
 
 
 
