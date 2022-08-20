@@ -58,6 +58,7 @@ def get_pages(pdf_list:list, pth) -> dict:
             pass
 
     print(f'Found keywords in documents {pdf_pages.keys()} /n Could not scan through {evaded_pdfs}')
+    return pdf_pages
 
 
 
