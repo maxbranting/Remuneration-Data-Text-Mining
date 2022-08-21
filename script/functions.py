@@ -129,7 +129,7 @@ def get_pdf_text(pdf_pages:dict, pth) -> pd.DataFrame:
             for index, item in enumerate(textsplit):
                 if item in keywords_pay:
                     dictitle = (str(title) + ' page ' + str(page))
-                    remuntext_dict[dictitle] = textsplit[index-50:index+50]
+                    remuntext_dict[dictitle] = textsplit[index-100:index+100]
                     print('Keywords found /n Extracting text')
     remuntext_dict = {index: ' '.join(values) for index, values in remuntext_dict.items()}
     remuntext_df = pd.DataFrame.from_dict(remuntext_dict, orient = 'index')
