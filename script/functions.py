@@ -75,7 +75,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
     -------
     Assign the function to a variable. The function will return concatanated tables as a dataframe
     """
-
+    dftext = pd.DataFrame()
 
     for title, pages in pdf_pages.items():
         print(f'Searching for tables in {title}')
@@ -83,7 +83,6 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
         notabpdfs = []
         #empty list of dataframes
         tempdfs = []
-        dftext = pd.DataFrame()
         for page in pages:
             #converting page to str for camelot read
             cpage = str(page)
