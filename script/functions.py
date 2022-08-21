@@ -91,6 +91,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
             tables = camelot.read_pdf(pth + '/' + title, pages=cpage)
             if len(tables)==0:
                 notabpdfs.append(title)
+                pass
             else:    
                 for i in range(len(tables)):
                     tempdf = tables[i].df
