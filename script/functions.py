@@ -108,7 +108,7 @@ def get_pdf_tables(pdf_pages:dict, pth) -> pd.DataFrame:
 
 def get_pdf_text(pdf_pages:dict, pth) -> pd.DataFrame:
     """
-    Searches for keywords on pages that cointain them. If found extracts 50 words before and 50 words after the keyword.
+    Searches for keywords on pages that cointain them. If found extracts 100 words before and 100 words after the keyword.
     
     Arguments
     -------
@@ -117,7 +117,7 @@ def get_pdf_text(pdf_pages:dict, pth) -> pd.DataFrame:
 
     How to use
     -----
-    Assign to a variable, the function will return a dictionary of filename and its page as key and a list of words as value.
+    Assign to a variable, the function will return a dataframe with words that have been extracted and correspodning filename.
     """
 
     remuntext_dict = {}
