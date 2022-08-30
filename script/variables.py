@@ -1,5 +1,5 @@
 # insert path to pdf files
-paths = [r'C:\Users\maxim\Documents\GitHub\Remuneration-Data-Text-Mining\reports', r'C:\Users\mi.martowicz\Documents\GitHub\text-mining\Reports']
+paths = [r'C:\Users\maxim\Documents\GitHub\Remuneration-Data-Text-Mining\reports', r'C:\Users\mi.martowicz\Documents\GitHub\Remuneration-Data-Text-Mining\reports']
 
 ################################# INSERT APPROPRIATE KEYWORDS #################################
 key_words = {'exec': ['ceo', 'chief executive', 'chief executive officer', 'director'], 
