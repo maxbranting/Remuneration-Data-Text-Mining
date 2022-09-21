@@ -32,7 +32,6 @@ desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 pdf_pages = get_pages(pdf_list, pth)
 
 # Extraction of tables from previously listed out pages
-##### !!!!!!!!!!!!!!! dataframe is empty, needs to be fixed, probably a mistake in functions.py bc the original in jupyter worked fine
 extracted_tables = get_pdf_tables(pdf_pages, pth)
 extracted_tables.to_csv(desktop+'/pdftables.csv', sep=';', encoding='UTF-8')
 
